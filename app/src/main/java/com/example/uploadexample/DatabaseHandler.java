@@ -19,7 +19,7 @@ The LOB datatypes BLOB, CLOB, NCLOB, and BFILE enable you to store and manipulat
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     public DatabaseHandler(Context context) {
-        super(context, "database.db", null, 1);
+        super(context, "database.db", null, 3);
     }
 
     @Override
@@ -48,6 +48,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
+
             return false;
         }
     }

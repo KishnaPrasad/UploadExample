@@ -30,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnClick(View view) {
-      //  Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-    //    intent.setType("*/*");
-        Intent intent = new Intent(Intent.ACTION_PICK,Uri.parse("content://media/internal/images/media"));
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        //8Intent intent = new Intent(Intent.ACTION_PICK,Uri.parse("content://media/internal/images/media"));
         startActivityForResult(intent, 7);
     }
 
@@ -50,10 +50,14 @@ public class MainActivity extends AppCompatActivity {
                         //String PathHolder = data.getData().getPath();
                         //String x = data.getData().getPath();
                         Uri uri = data.getData();
-                        String x = getpath(uri);
+                        //String x = uri.getPath();
+                        String x = FilePath.getPath(this,uri);
+                        //String x = getpath(uri);
+
+
                         Integer tableId = Integer.parseInt(id.getText().toString());
                         //tv.setText(PathHolder);
-                        //tv.setText(x);
+                        tv.setText(x);
                         if (db.insertFile(x, tableId)) {
                             Toast.makeText(getApplicationContext(), "Successfull!!!", Toast.LENGTH_LONG).show();
                         } else {
