@@ -30,10 +30,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnClick(View view) {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
-        //8Intent intent = new Intent(Intent.ACTION_PICK,Uri.parse("content://media/internal/images/media"));
-        startActivityForResult(intent, 7);
+        Intent intent = new Intent();
+        intent.setType("*/*");//sets the select file to all types of files
+        intent.setAction(Intent.ACTION_GET_CONTENT);//starts new activity to select file and return data
+        //Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(Intent.createChooser(intent, "Choose File to Upload.."), 7);
     }
 
     @Override
@@ -47,16 +48,9 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
 
                     try {
-                        //String PathHolder = data.getData().getPath();
-                        //String x = data.getData().getPath();
                         Uri uri = data.getData();
-                        //String x = uri.getPath();
                         String x = FilePath.getPath(this,uri);
-                        //String x = getpath(uri);
-
-
                         Integer tableId = Integer.parseInt(id.getText().toString());
-                        //tv.setText(PathHolder);
                         tv.setText(x);
                         if (db.insertFile(x, tableId)) {
                             Toast.makeText(getApplicationContext(), "Successfull!!!", Toast.LENGTH_LONG).show();
@@ -73,19 +67,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public String getpath(Uri uri) {
-        if (uri == null) return null;
-        String[] projection = {MediaStore.Images.Media.DATA};
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
-        if (cursor != null) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            Toast.makeText(getApplicationContext(),"hello2"+cursor.getString(column_index),Toast.LENGTH_LONG).show();
-            return cursor.getString(column_index);
 
-        }
-        Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_LONG).show();
-        return uri.getPath();
-
-    }
 }

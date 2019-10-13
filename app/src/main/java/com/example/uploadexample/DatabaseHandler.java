@@ -9,8 +9,8 @@ import android.widget.Toast;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-/*Overview of LOB Datatypes
-The LOB datatypes BLOB, CLOB, NCLOB, and BFILE enable you to store and manipulate
+/*Overview of LOB(Large OBject) Datatypes
+The LOB datatypes BLOB(Binary Large OBject), CLOB(Character Large OBject), NCLOB, and BFILE enable you to store and manipulate
  large blocks of unstructured data (such as text, graphic images, video clips, and sound waveforms)
   in binary or character format.
    They provide efficient, random, piece-wise access to the data.
@@ -32,14 +32,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("drop table  if exists files");
     }
 
-    //insert image
-    // x= image location
     public Boolean insertFile(String x, Integer i) {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
-            FileInputStream fs = new FileInputStream(x);
-            byte[] fileByte = new byte[fs.available()];
-            fs.read(fileByte);
+            FileInputStream fs = new FileInputStream(x);//Java FileInputStream class, java.io.FileInputStream,
+            // makes it possible to read the contents of a file as a stream of bytes.
+            byte[] fileByte = new byte[fs.available()];//fs.available=Total file size to read (in bytes)
+            fs.read(fileByte);//read(byte[] b)
+            //This method reads up to byte.length bytes of data from this input stream into an array of bytes.
             ContentValues contentValues = new ContentValues();
             contentValues.put("id", i);
             contentValues.put("file", fileByte);
